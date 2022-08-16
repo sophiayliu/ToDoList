@@ -10,7 +10,10 @@ import UIKit
 class ToDoListViewController: UITableViewController {
     
     var toDos : [ToDo] = []
-
+    
+    
+    @IBOutlet weak var plusToDoButton: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,7 +62,14 @@ class ToDoListViewController: UITableViewController {
     }
 
     
-    /*
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+      // this gives us a single ToDo
+      let toDo = toDos[indexPath.row]
+
+      performSegue(withIdentifier: "moveToComplete", sender: toDo)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -67,7 +77,17 @@ class ToDoListViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if let addVC = segue.destination as? AddToDoViewController {
+            addVC.previousVC = self
+        }
+        
+        if let completeVC = segue.destination as? completeToDoViewController {
+            if let toDo = sender as? ToDo {
+                completeVC.selectedToDo = toDo
+                completeVC.previousVC = self
+            }
+        }
     }
-    */
 
 }
