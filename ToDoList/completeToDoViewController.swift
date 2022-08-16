@@ -10,7 +10,7 @@ import UIKit
 class completeToDoViewController: UIViewController {
 
     var previousVC = ToDoListViewController()
-    var selectedToDo = ToDo()
+    var selectedToDo : ToDoCD?
     
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -20,11 +20,17 @@ class completeToDoViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        titleLabel.text = selectedToDo.name
+        titleLabel.text = selectedToDo?.name
     }
     
     
     @IBAction func completeButton(_ sender: Any) {
+        if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
+            if let theToDo = selectedToDo {
+              context.delete(theToDo)
+              navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     /*

@@ -8,6 +8,8 @@
 import UIKit
 
 class ToDo {
+    // name of task
     var name = ""
+    // whether it is "important"
     var important = false
 }
